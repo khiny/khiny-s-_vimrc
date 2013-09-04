@@ -27,32 +27,41 @@ filetype off
 " =============================================================================
 " pathogen.vim
 " =============================================================================
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
+" runtime bundle/vim-pathogen/autoload/pathogen.vim
+" call pathogen#infect()
 
 " =============================================================================
 " vundle
 " =============================================================================
-""""""""""""""""" set rtp+=~/.vim/bundle/vundle/
-""""""""""""""""" call vundle#rc()
+"set rtp+=~/.vim/bundle/vundle/
+set rtp+=C:\Program\ Files\ (x86)/Vim/vimfiles/bundle/vundle
+call vundle#rc()
 
  " let Vundle manage Vundle
  " required! 
-""""""""""""""""" Bundle 'gmarik/vundle'
+Bundle 'gmarik/vundle'
 
  " My Bundles here:
  "
  " original repos on github
-" Bundle 'tpope/vim-fugitive'
-" Bundle 'Lokaltog/vim-easymotion'
-" Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'tpope/vim-fugitive'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'L9'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
  " vim-scripts repos
-" Bundle 'L9'
-" Bundle 'FuzzyFinder'
+Bundle 'FuzzyFinder'
+"Bundle 'L9'
+Bundle 'The-NERD-tree'
+Bundle 'Tagbar'
+"Bundle 'minibufexpl.vim'
 " Bundle 'rails.vim'
+
  " non github repos
-" Bundle 'git://git.wincent.com/command-t.git'
- " ...
+Bundle 'git://git.wincent.com/command-t.git'
+Bundle 'https://github.com/chazy/cscope_maps.git'
+Bundle 'https://github.com/wesleyche/SrcExpl.git'
+""Bundle 'Mark'		"It's too old!
+" ...
 
  filetype plugin indent on     " required! 
  "
@@ -89,11 +98,11 @@ endif
 " 일본어와 한국어 토글
 " =============================================================================
 "map <F5> :se enc=japan<CR>:se guifont=IPAGothic:h12<CR>
-map <F5> :se enc=sjis<CR>:se guifont=IPAGothic:h10<CR>
+"map <F5> :se enc=sjis<CR>:se guifont=IPAGothic:h10<CR>
 "map <F5> :se enc=sjis<CR>:se guifont=MS\ Gothic<CR>
 "map <F6> :se enc=korea<CR>:se guifont=굴림체:h9:cHANGEUL<CR>
 "map <F6> :se enc=korea<CR>:se guifont=Envy\ Code\ R<CR>
-map <F6> :se enc=korea<CR>:se guifont=나눔고딕코딩:h10:cHANGEUL<CR>
+"map <F6> :se enc=korea<CR>:se guifont=나눔고딕코딩:h10:cHANGEUL<CR>
 
 " =============================================================================
 " MS-WINDOWS 에서 창 크기 최대화 하기
@@ -110,12 +119,27 @@ au GUIEnter * simalt ~x
 " Taglist 에 대한 설정
 " =============================================================================
 set tags=./tags,tags
-set tags+=D:\work\svn-kissco\M5MoLS\trunk\M5MoLS\source\tags
+"set tags+=D:\work\svn-kissco\M5MoLS\trunk\M5MoLS\source\tags
 
 " =============================================================================
 " Tagbar 에 대한 설정
 " =============================================================================
 nnoremap <silent> <F11> :TagbarToggle<CR>
+
+" =============================================================================
+" Mark 에 대한 설정
+" =============================================================================
+set viminfo+=!  " Save and restore global variables.
+let g:mwDefaultHighlightingPalette = 'maximum'
+" 내가 쓸 group 설정
+command -bar HenryMarks silent MarkClear |
+			\execute '1Mark aec_init(.*):' |
+			\execute '1Mark aec_process(.*):' |
+			\execute '1Mark aec_process_pack_output:' |
+			\execute '2Mark aec_process_calc_current_bayer_metered_luma' |
+			\execute '3Mark aec_process_apply_antibanding' |
+			\execute '4Mark aec_process_calculate_roi_current_luma' |
+			\execute '4Mark aec_set_roi aec_roi enabled!' |
 
 " =============================================================================
 " NERDtree
@@ -126,12 +150,32 @@ let NERDTreeShowBookmarks=1
 let NERDTreeHighlightCursorline=1
 
 " =============================================================================
+" SrcExpl
+" =============================================================================
+nmap <F9> :SrcExplToggle<CR> 
+let g:SrcExpl_refreshTime = 100 
+
+
+" =============================================================================
+" miniBufExpl
+" =============================================================================
+"let g:miniBufExplModSelTarget = 1
+"let g:miniBufExplorerMoreThanOne = 0
+"let g:miniBufExplModSelTarget = 0
+"let g:miniBufExplUseSingleClick = 1
+"let g:miniBufExplMapWindowNavVim = 1
+"let g:miniBufExplMapCTabSwitchBuffs = 1
+"let g:miniBufExplHSplit = 10
+"let g:miniBufExplSplitAbove=1 "let g:miniBufExplSplitBelow=1
+"let g:alternateNoDefaultAlternate = 1
+
+" =============================================================================
 " FuzzyFinder
 " =============================================================================
 let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|swp|class|pyc|orig|lib)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
-map <leader>ff :FufFile **/<CR>
-"map <leader>fb :FufBuffer **/<CR>
-map <leader>fd :FufDir **/<CR>
+map <leader>ff <ESC>:FufFile **/<CR>
+"map <leader>fb <ESC>:FufBuffer **/<CR>
+map <leader>fd <ESC>:FufDir **/<CR>
 
 " =============================================================================
 " cscope 에 대한 설정
@@ -141,9 +185,11 @@ if filereadable("./cscope.out")
 "elseif filereadable("./main.cpp")
 "	cs add C:\QtSDK\Desktop\Qt\4.7.3\mingw\include\cscope.out
 else
-	cd D:\work\svn-kissco\M5MoLS\trunk\M5MoLS\source
-	cs add D:\work\svn-kissco\M5MoLS\trunk\M5MoLS\source\cscope.out
+"	cd D:\work\svn-kissco\M5MoLS\trunk\M5MoLS\source
+"	cs add D:\work\svn-kissco\M5MoLS\trunk\M5MoLS\source\cscope.out
 endif
+
+" cscope.out재생성하고 재연결
 
 
 " =============================================================================
@@ -154,7 +200,10 @@ set ignorecase
 "=============================================================================
 " Tab를 눌렀을때 4칸 이동
 " =============================================================================
-set tabstop=4
+"set tabstop=4
+set tabstop=2
+" c, cpp, h들을 편집할때만 tab을 space 로 자동변환
+au Bufenter *.\(c\|cpp\|h\) set et
 
 " =============================================================================
 " 자동 들여쓰기
