@@ -55,6 +55,8 @@ Bundle 'The-NERD-tree'
 Bundle 'Tagbar'
 "Bundle 'minibufexpl.vim'
 " Bundle 'rails.vim'
+Bundle 'ack.vim'
+Bundle 'molokai'
 
  " non github repos
 Bundle 'git://git.wincent.com/command-t.git'
@@ -87,7 +89,8 @@ let mapleader = ","
 " 설정하는 것이다. 아래의 설정은 아무것도 없이 사용하는 것이다.
 " =============================================================================
 if has("win32")
-    set guifont=나눔고딕코딩:h10:cHANGEUL
+    "set guifont=나눔고딕코딩:h10:cHANGEUL
+    set guifont=DejaVu\ Sans\ Mono:h10
 	"set enc=japan
     "set guifont=IPAGothic:h10
     "set guioptions=
@@ -271,7 +274,7 @@ set number
 " =============================================================================
 " >>, << command 시 shift 할 크기를 정해준다 통상 와 동일하게 설정 하면 된다.
 " =============================================================================
-set shiftwidth=4
+set shiftwidth=2
 
 " =============================================================================
 " 닫는 괄호")", 브라켓"}"을 입력시 매칭되는 여는 괄호, 브라켓에 잠시 커서가
@@ -311,9 +314,14 @@ highlight CursorIM guibg=Blue guifg=NONE ctermbg=Blue ctermfg=NONE
 
 
 "colorscheme torte
-colorscheme desert
-"colorscheme molokai
-"set background=light
+"colorscheme desert
+
+" ===== molokai =====
+colorscheme molokai
+"let g:molokai_original = 1
+"let g:rehash256 = 1
+"set background=dark
+" ===== molokai =====
 
 "set background=dark
 "colorscheme solarized
@@ -376,4 +384,12 @@ map <F4> [{V]}zf
 " clipboard 설정
 " =============================================================================
 set clipboard=unnamed
+
+" =============================================================================
+" horizontal scroll bar 설정
+" =============================================================================
+:nnoremap <silent><expr> <f2> ':set wrap! go'.'-+'[&wrap]."=b\r"
+":set wrap! go+=b<CR>
+":set wrap! go-=b<CR>
+
 
