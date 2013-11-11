@@ -90,11 +90,10 @@ let mapleader = ","
 " =============================================================================
 if has("win32")
     "set guifont=나눔고딕코딩:h10:cHANGEUL
-    set guifont=DejaVu\ Sans\ Mono:h10
-	"set enc=japan
-    "set guifont=IPAGothic:h10
-    "set guioptions=
-	"set guioptions+=rR	"오른쪽스크롤바사용
+    set guifont=DejaVu\ Sans\ Mono:h10  "font setting
+    "set guioptions-=m  "remove menu bar
+    set guioptions-=T  "remove toolbar
+    "set guioptions-=r  "remove right-hand scroll bar
 endif
 
 " =============================================================================
@@ -157,6 +156,9 @@ let NERDTreeHighlightCursorline=1
 " =============================================================================
 nmap <F9> :SrcExplToggle<CR> 
 let g:SrcExpl_refreshTime = 100 
+let g:SrcExpl_winHeight = 14
+let g:SrcExpl_isUpdateTags = 0
+let g:SrcExpl_updateTagsCmd = "ctags -L cscope.files" 
 
 
 " =============================================================================
@@ -238,7 +240,44 @@ set nobackup
 " 사용하여 폴딩 되는 소스의 범위를 설정 해 놓는다. 이는 이 파일을 다시
 " 열었을때 기존의 폴더 정보를 그대로 유지 할수 있게 해 준다.
 " =============================================================================
-set foldmethod=marker
+"set foldmethod=marker
+
+" =============================================================================
+" auto view setting
+" =============================================================================
+
+let g:skipview_files = [
+            \ '[EXAMPLE PLUGIN BUFFER]'
+            \ ]
+function! MakeViewCheck()
+    if has('quickfix') && &buftype =~ 'nofile'
+        " Buffer is marked as not a file
+        return 0
+    endif
+    if empty(glob(expand('%:p')))
+        " File does not exist on disk
+        return 0
+    endif
+    if len($TEMP) && expand('%:p:h') == $TEMP
+        " We're in a temp dir
+        return 0
+    endif
+    if len($TMP) && expand('%:p:h') == $TMP
+        " Also in temp dir
+        return 0
+    endif
+    if index(g:skipview_files, expand('%')) >= 0
+        " File is in skip list
+        return 0
+    endif
+    return 1
+endfunction
+augroup vimrcAutoView
+    autocmd!
+    " Autosave & Load Views.
+    autocmd BufWritePost,BufLeave,WinLeave ?* if MakeViewCheck() | mkview | endif
+    autocmd BufWinEnter ?* if MakeViewCheck() | silent loadview | endif
+augroup end
 
 " =============================================================================
 " 폴더 설정이 되어 있는 파일을 열었을때 폴더 되어 있는 레벨을 설정한다.
