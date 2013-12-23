@@ -34,7 +34,8 @@ filetype off
 " vundle
 " =============================================================================
 "set rtp+=~/.vim/bundle/vundle/
-set rtp+=C:\Program\ Files\ (x86)/Vim/vimfiles/bundle/vundle
+"set rtp+=C:\Program\ Files\ (x86)/Vim/vimfiles/bundle/vundle
+set rtp+=C:\Program\ Files/Vim/vimfiles/bundle/vundle
 call vundle#rc()
 
  " let Vundle manage Vundle
@@ -45,12 +46,13 @@ Bundle 'gmarik/vundle'
  "
  " original repos on github
 Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'L9'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+"Bundle 'Lokaltog/vim-easymotion'
+Bundle 'haya14busa/vim-easymotion'
+"Bundle 'L9'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim'}
  " vim-scripts repos
 Bundle 'FuzzyFinder'
-"Bundle 'L9'
+Bundle 'L9'
 Bundle 'The-NERD-tree'
 Bundle 'Tagbar'
 "Bundle 'minibufexpl.vim'
@@ -160,6 +162,11 @@ let g:SrcExpl_winHeight = 14
 let g:SrcExpl_isUpdateTags = 0
 let g:SrcExpl_updateTagsCmd = "ctags -L cscope.files" 
 
+" =============================================================================
+" haya14busa/vim-easymotion
+" =============================================================================
+map <SPACE> <Plug>(easymotion-s)
+let g:EasyMotion_smartcase = 1
 
 " =============================================================================
 " miniBufExpl
