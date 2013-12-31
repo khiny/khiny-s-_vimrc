@@ -30,55 +30,64 @@ filetype off
 " runtime bundle/vim-pathogen/autoload/pathogen.vim
 " call pathogen#infect()
 
-" =============================================================================
-" vundle
-" =============================================================================
-"set rtp+=~/.vim/bundle/vundle/
-"set rtp+=C:\Program\ Files\ (x86)/Vim/vimfiles/bundle/vundle
-set rtp+=C:\Program\ Files/Vim/vimfiles/bundle/vundle
-call vundle#rc()
+if has('vim_starting')
+   set nocompatible               " Be iMproved
+   "set runtimepath+=~/.vim/bundle/neobundle.vim/
+   set runtimepath+=C:\Program\ Files\ (x86)/Vim/vimfiles/bundle/neobundle.vim/
+ endif
 
- " let Vundle manage Vundle
- " required! 
-Bundle 'gmarik/vundle'
+ call neobundle#rc(expand('~/.vim/bundle/'))
+
+ " Let NeoBundle manage NeoBundle
+ NeoBundleFetch 'Shougo/neobundle.vim'
+
+ " Recommended to install
+ NeoBundle 'Shougo/vimproc', {
+  \ 'build' : {
+  \     'windows' : 'make -f make_mingw32.mak',
+  \     'cygwin' : 'make -f make_cygwin.mak',
+  \     'mac' : 'make -f make_mac.mak',
+  \     'unix' : 'make -f make_unix.mak',
+  \    },
+  \ }
 
  " My Bundles here:
+ " Refer to |:NeoBundle-examples|.
  "
- " original repos on github
-Bundle 'tpope/vim-fugitive'
-"Bundle 'Lokaltog/vim-easymotion'
-Bundle 'haya14busa/vim-easymotion'
-"Bundle 'L9'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim'}
- " vim-scripts repos
-Bundle 'FuzzyFinder'
-Bundle 'L9'
-Bundle 'The-NERD-tree'
-Bundle 'Tagbar'
-"Bundle 'minibufexpl.vim'
-" Bundle 'rails.vim'
-Bundle 'ack.vim'
-Bundle 'molokai'
+ " Note: You don't set neobundle setting in .gvimrc!
 
- " non github repos
-Bundle 'git://git.wincent.com/command-t.git'
-Bundle 'https://github.com/chazy/cscope_maps.git'
-Bundle 'https://github.com/wesleyche/SrcExpl.git'
-""Bundle 'Mark'		"It's too old!
-" ...
+ " ...
+NeoBundle 'https://github.com/Shougo/unite.vim'
+NeoBundle 'molokai'
+NeoBundle 'git://git.wincent.com/command-t.git'
+NeoBundle 'https://github.com/chazy/cscope_maps.git'
+NeoBundle 'https://github.com/wesleyche/SrcExpl.git'
+NeoBundle 'The-NERD-tree'
+NeoBundle 'Tagbar'
+NeoBundle 'haya14busa/vim-easymotion'
+"NeoBundle 'ack.vim'
+NeoBundle 'tpope/vim-fugitive' "{{{
+      nnoremap <silent> <leader>gs :Gstatus<CR>
+      nnoremap <silent> <leader>gd :Gdiff<CR>
+      nnoremap <silent> <leader>gc :Gcommit<CR>
+      nnoremap <silent> <leader>gb :Gblame<CR>
+      nnoremap <silent> <leader>gl :Glog<CR>
+      nnoremap <silent> <leader>gp :Git push<CR>
+      nnoremap <silent> <leader>gw :Gwrite<CR>
+      nnoremap <silent> <leader>gr :Gremove<CR>
+      autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
+      autocmd BufReadPost fugitive://* set bufhidden=delete
+    "}}}
 
- filetype plugin indent on     " required! 
+ filetype plugin indent on     " Required!
  "
  " Brief help
- " :BundleList          - list configured bundles
- " :BundleInstall(!)    - install(update) bundles
- " :BundleSearch(!) foo - search(or refresh cache first) for foo
- " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
- "
- " see :h vundle for more details or wiki for FAQ
- " NOTE: comments after Bundle command are not allowed..
-" =============================================================================
+ " :NeoBundleList          - list configured bundles
+ " :NeoBundleInstall(!)    - install(update) bundles
+ " :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
 
+ " Installation check.
+ NeoBundleCheck
 
 " =============================================================================
 " <Leader> 설정 (mapleader변수 이용)
@@ -439,3 +448,24 @@ set clipboard=unnamed
 ":set wrap! go-=b<CR>
 
 
+" =============================================================================
+" remap from ; to : - it's more useful!
+" =============================================================================
+noremap ; :
+"noremap : <nop>
+
+" =============================================================================
+" unite
+" =============================================================================
+nnoremap <leader>f :<C-u>Unite file<CR>
+nnoremap <C-p> :Unite file_rec/async<cr>
+"nnoremap <leader>r :<C-u>Unite -start-insert file_rec/async:!<CR>
+"nnoremap <leader>f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
+"call unite#filters#matcher_default#use(['matcher_fuzzy'])
+"call unite#filters#sorter_default#use(['sorter_rank'])
+"call unite#set_profile('files', 'smartcase', 1)
+"call unite#custom#source('line,outline','matchers','matcher_fuzzy')
+"let g:unite_prompt='≫ '
+let g:unite_source_grep_command='ack'
+let g:unite_source_grep_default_opts='--no-heading --no-color -a -C4'
+let g:unite_source_grep_recursive_opt=''
