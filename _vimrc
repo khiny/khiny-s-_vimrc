@@ -65,6 +65,11 @@ NeoBundle 'https://github.com/wesleyche/SrcExpl.git'
 NeoBundle 'The-NERD-tree'
 NeoBundle 'Tagbar'
 NeoBundle 'haya14busa/vim-easymotion'
+NeoBundle 'https://github.com/terryma/vim-expand-region'
+NeoBundle 'vim-startify'
+let g:startify_custom_indices = ['f', 'g', 'h', 'r', 'i', 'o', 'b']
+
+NeoBundle 'vim-multiple-cursors'
 "NeoBundle 'ack.vim'
 NeoBundle 'tpope/vim-fugitive' "{{{
       nnoremap <silent> <leader>gs :Gstatus<CR>
@@ -458,7 +463,7 @@ noremap ; :
 " unite
 " =============================================================================
 nnoremap <leader>f :<C-u>Unite file<CR>
-nnoremap <C-p> :Unite file_rec/async<cr>
+"nnoremap <C-p> :Unite file_rec/async<cr>
 "nnoremap <leader>r :<C-u>Unite -start-insert file_rec/async:!<CR>
 "nnoremap <leader>f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
 "call unite#filters#matcher_default#use(['matcher_fuzzy'])
