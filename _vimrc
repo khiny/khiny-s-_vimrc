@@ -33,7 +33,8 @@ filetype off
 if has('vim_starting')
    set nocompatible               " Be iMproved
    "set runtimepath+=~/.vim/bundle/neobundle.vim/
-   set runtimepath+=C:\Program\ Files\ (x86)/Vim/vimfiles/bundle/neobundle.vim/
+   "set runtimepath+=C:\Program\ Files\ (x86)/Vim/vimfiles/bundle/neobundle.vim/
+   set runtimepath+=C:\Program\ Files/Vim/vimfiles/bundle/neobundle.vim/
  endif
 
  call neobundle#rc(expand('~/.vim/bundle/'))
@@ -66,6 +67,25 @@ NeoBundle 'The-NERD-tree'
 NeoBundle 'Tagbar'
 NeoBundle 'haya14busa/vim-easymotion'
 NeoBundle 'https://github.com/terryma/vim-expand-region'
+NeoBundle 'bling/vim-airline'
+set laststatus=2
+let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '|'
+
+"powerline symbols
+if !exists('g:airline_symbols')
+let g:airline_symbols = {}
+endif
+let g:airline_left_sep = 'þó'
+let g:airline_left_alt_sep = 'þô'
+let g:airline_right_sep = 'þõ'
+let g:airline_right_alt_sep = 'þö'
+let g:airline_symbols.branch = 'þã'
+let g:airline_symbols.readonly = 'þå'
+let g:airline_symbols.linenr = 'þä'
+
+
 NeoBundle 'vim-startify'
 let g:startify_custom_indices = ['f', 'g', 'h', 'r', 'i', 'o', 'b']
 
@@ -106,7 +126,8 @@ let mapleader = ","
 " =============================================================================
 if has("win32")
     "set guifont=³ª´®°íµñÄÚµù:h10:cHANGEUL
-    set guifont=DejaVu\ Sans\ Mono:h10  "font setting
+    "set guifont=DejaVu\ Sans\ Mono:h10  "font setting
+		set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h10
     "set guioptions-=m  "remove menu bar
     set guioptions-=T  "remove toolbar
     "set guioptions-=r  "remove right-hand scroll bar
@@ -345,7 +366,7 @@ set showmatch
 " =============================================================================
 " È­¸é ¸Ç ¾Æ·¡ »óÅÂ ÁÙÀÌ ¾î¶»°Ô ³ª¿À´Â °¡¸¦ Çü½ÄÈ­ ÇÏ´Â °ÍÀÌ´Ù.
 " =============================================================================
-set statusline=\ %f\ %m%h%r\ [%P]\ %a\ %<%l:%v\
+"set statusline=\ %f\ %m%h%r\ [%P]\ %a\ %<%l:%v\
 
 " ============================================================================= 
 " Make command line two lines high
