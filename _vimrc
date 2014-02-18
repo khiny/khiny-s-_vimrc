@@ -10,7 +10,7 @@ source $VIMRUNTIME/gvimrc_example.vim
 " C-v, C-c, C-q, C-a 등...
 " =============================================================================
 if has("win32")
-    source $VIMRUNTIME/mswin.vim
+	source $VIMRUNTIME/mswin.vim
 endif
 
 " =============================================================================
@@ -31,51 +31,68 @@ filetype off
 " call pathogen#infect()
 
 if has('vim_starting')
-   set nocompatible               " Be iMproved
-   "set runtimepath+=~/.vim/bundle/neobundle.vim/
-   "set runtimepath+=C:\Program\ Files\ (x86)/Vim/vimfiles/bundle/neobundle.vim/
-   set runtimepath+=C:\Program\ Files/Vim/vimfiles/bundle/neobundle.vim/
- endif
+	set nocompatible               " Be iMproved
+	set runtimepath+=~/.vim/bundle/neobundle.vim/
+	"set runtimepath+=C:\Program\ Files\ (x86)/Vim/vimfiles/bundle/neobundle.vim/
+	"set runtimepath+=C:\Program\ Files/Vim/vimfiles/bundle/neobundle.vim/
+endif
 
- call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#rc(expand('~/.vim/bundle/'))
 
- " Let NeoBundle manage NeoBundle
- NeoBundleFetch 'Shougo/neobundle.vim'
+" Let NeoBundle manage NeoBundle
+NeoBundleFetch 'Shougo/neobundle.vim'
 
- " Recommended to install
- NeoBundle 'Shougo/vimproc', {
-  \ 'build' : {
-  \     'windows' : 'make -f make_mingw32.mak',
-  \     'cygwin' : 'make -f make_cygwin.mak',
-  \     'mac' : 'make -f make_mac.mak',
-  \     'unix' : 'make -f make_unix.mak',
-  \    },
-  \ }
+" Recommended to install
+let g:make = 'gmake'
+if system('uname -o') =~ '^GNU/'
+	let g:make = 'make'
+endif
+NeoBundle 'Shougo/vimproc', {
+			\ 'build' : {
+			\     'windows' : 'make -f make_mingw32.mak',
+			\     'cygwin' : 'make -f make_cygwin.mak',
+			\     'mac' : 'make -f make_mac.mak',
+			\     'unix' : 'make -f make_unix.mak',
+			\    },
+			\ }
 
- " My Bundles here:
- " Refer to |:NeoBundle-examples|.
- "
- " Note: You don't set neobundle setting in .gvimrc!
+" My Bundles here:
+" Refer to |:NeoBundle-examples|.
+"
+" Note: You don't set neobundle setting in .gvimrc!
 
- " ...
+" ...
 NeoBundle 'https://github.com/Shougo/unite.vim'
 NeoBundle 'molokai'
-NeoBundle 'git://git.wincent.com/command-t.git'
+"NeoBundle 'git://git.wincent.com/command-t.git'
 NeoBundle 'https://github.com/chazy/cscope_maps.git'
 NeoBundle 'https://github.com/wesleyche/SrcExpl.git'
 NeoBundle 'The-NERD-tree'
 NeoBundle 'Tagbar'
-NeoBundle 'haya14busa/vim-easymotion'
+nnoremap <silent> <F11> :TagbarToggle<CR>
+let g:tagbar_width = 60
+
+"NeoBundle 'haya14busa/vim-easymotion'
+NeoBundle 'Lokaltog/vim-easymotion'
+let g:EasyMotion_smartcase = 1
+"n-character search motion
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+
+map <SPACE> <Plug>(easymotion-s2)
+
 NeoBundle 'https://github.com/terryma/vim-expand-region'
 NeoBundle 'bling/vim-airline'
 set laststatus=2
-let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#left_sep = ' '
 "let g:airline#extensions#tabline#left_alt_sep = '|'
 
 "powerline symbols
 if !exists('g:airline_symbols')
-let g:airline_symbols = {}
+	let g:airline_symbols = {}
 endif
 let g:airline_left_sep = '��'
 let g:airline_left_alt_sep = '��'
@@ -90,29 +107,61 @@ NeoBundle 'vim-startify'
 let g:startify_custom_indices = ['f', 'g', 'h', 'r', 'i', 'o', 'b']
 
 NeoBundle 'vim-multiple-cursors'
-"NeoBundle 'ack.vim'
+NeoBundle 'mileszs/ack.vim'
 NeoBundle 'tpope/vim-fugitive' "{{{
-      nnoremap <silent> <leader>gs :Gstatus<CR>
-      nnoremap <silent> <leader>gd :Gdiff<CR>
-      nnoremap <silent> <leader>gc :Gcommit<CR>
-      nnoremap <silent> <leader>gb :Gblame<CR>
-      nnoremap <silent> <leader>gl :Glog<CR>
-      nnoremap <silent> <leader>gp :Git push<CR>
-      nnoremap <silent> <leader>gw :Gwrite<CR>
-      nnoremap <silent> <leader>gr :Gremove<CR>
-      autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
-      autocmd BufReadPost fugitive://* set bufhidden=delete
-    "}}}
+nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gd :Gdiff<CR>
+nnoremap <silent> <leader>gc :Gcommit<CR>
+nnoremap <silent> <leader>gb :Gblame<CR>
+nnoremap <silent> <leader>gl :Glog<CR>
+nnoremap <silent> <leader>gp :Git push<CR>
+nnoremap <silent> <leader>gw :Gwrite<CR>
+nnoremap <silent> <leader>gr :Gremove<CR>
+autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
+autocmd BufReadPost fugitive://* set bufhidden=delete
+"}}}
 
- filetype plugin indent on     " Required!
- "
- " Brief help
- " :NeoBundleList          - list configured bundles
- " :NeoBundleInstall(!)    - install(update) bundles
- " :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"NeoBundle 'https://github.com/Valloric/YouCompleteMe'
+"NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'Shougo/neocomplete.vim'
+"let g:neocomplcache_enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+autocmd FileType txt :NeoCompleteDisable
+autocmd FileType c,cpp,asm,h :NeoCompleteEnable
 
- " Installation check.
- NeoBundleCheck
+NeoBundle 'Shougo/unite-outline'
+
+NeoBundle 'https://github.com/scrooloose/syntastic'
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0 " don't check on :wq and :x
+let g:syntastic_enable_signs = 1 " errors on left sid
+let g:syntastic_auto_loc_list = 2 " only show window when I ask
+let g:syntastic_c_check_header = 1
+let g:syntastic_c_no_include_search = 1
+let g:syntastic_c_compiler = 'gcc'
+if has('unix')
+	let g:syntastic_error_symbol = '★'
+	let g:syntastic_style_error_symbol = '>'
+	let g:syntastic_warning_symbol = '?'
+	let g:syntastic_style_warning_symbol = '>'
+else
+	let g:syntastic_error_symbol = '!'
+	let g:syntastic_style_error_symbol = '>'
+	let g:syntastic_warning_symbol = '.'
+	let g:syntastic_style_warning_symbol = '>'
+endif
+
+NeoBundle 'wannesm/wmgraphviz.vim'
+
+filetype plugin indent on     " Required!
+"
+" Brief help
+" :NeoBundleList          - list configured bundles
+" :NeoBundleInstall(!)    - install(update) bundles
+" :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+
+" Installation check.
+NeoBundleCheck
 
 " =============================================================================
 " <Leader> 설정 (mapleader변수 이용)
@@ -125,12 +174,12 @@ let mapleader = ","
 " 설정하는 것이다. 아래의 설정은 아무것도 없이 사용하는 것이다.
 " =============================================================================
 if has("win32")
-    "set guifont=나눔고딕코딩:h10:cHANGEUL
-    "set guifont=DejaVu\ Sans\ Mono:h10  "font setting
-		set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h10
-    "set guioptions-=m  "remove menu bar
-    set guioptions-=T  "remove toolbar
-    "set guioptions-=r  "remove right-hand scroll bar
+	"set guifont=나눔고딕코딩:h10:cHANGEUL
+	"set guifont=DejaVu\ Sans\ Mono:h10  "font setting
+	set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h10
+	"set guioptions-=m  "remove menu bar
+	set guioptions-=T  "remove toolbar
+	"set guioptions-=r  "remove right-hand scroll bar
 endif
 
 " =============================================================================
@@ -159,11 +208,6 @@ au GUIEnter * simalt ~x
 " =============================================================================
 set tags=./tags,tags
 "set tags+=D:\work\svn-kissco\M5MoLS\trunk\M5MoLS\source\tags
-
-" =============================================================================
-" Tagbar 에 대한 설정
-" =============================================================================
-nnoremap <silent> <F11> :TagbarToggle<CR>
 
 " =============================================================================
 " Mark 에 대한 설정
@@ -198,12 +242,6 @@ let g:SrcExpl_isUpdateTags = 0
 let g:SrcExpl_updateTagsCmd = "ctags -L cscope.files" 
 
 " =============================================================================
-" haya14busa/vim-easymotion
-" =============================================================================
-map <SPACE> <Plug>(easymotion-s)
-let g:EasyMotion_smartcase = 1
-
-" =============================================================================
 " miniBufExpl
 " =============================================================================
 "let g:miniBufExplModSelTarget = 1
@@ -219,21 +257,21 @@ let g:EasyMotion_smartcase = 1
 " =============================================================================
 " FuzzyFinder
 " =============================================================================
-let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|swp|class|pyc|orig|lib)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
-map <leader>ff <ESC>:FufFile **/<CR>
+"let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|swp|class|pyc|orig|lib)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
+"map <leader>ff <ESC>:FufFile **/<CR>
 "map <leader>fb <ESC>:FufBuffer **/<CR>
-map <leader>fd <ESC>:FufDir **/<CR>
+"map <leader>fd <ESC>:FufDir **/<CR>
 
 " =============================================================================
 " cscope 에 대한 설정
 " =============================================================================
 if filereadable("./cscope.out")
 	cs add ./cscope.out
-"elseif filereadable("./main.cpp")
-"	cs add C:\QtSDK\Desktop\Qt\4.7.3\mingw\include\cscope.out
+	"elseif filereadable("./main.cpp")
+	"	cs add C:\QtSDK\Desktop\Qt\4.7.3\mingw\include\cscope.out
 else
-"	cd D:\work\svn-kissco\M5MoLS\trunk\M5MoLS\source
-"	cs add D:\work\svn-kissco\M5MoLS\trunk\M5MoLS\source\cscope.out
+	"	cd D:\work\svn-kissco\M5MoLS\trunk\M5MoLS\source
+	"	cs add D:\work\svn-kissco\M5MoLS\trunk\M5MoLS\source\cscope.out
 endif
 
 " cscope.out재생성하고 재연결
@@ -288,38 +326,38 @@ set nobackup
 " auto view setting
 " =============================================================================
 
-let g:skipview_files = [
-            \ '[EXAMPLE PLUGIN BUFFER]'
-            \ ]
-function! MakeViewCheck()
-    if has('quickfix') && &buftype =~ 'nofile'
-        " Buffer is marked as not a file
-        return 0
-    endif
-    if empty(glob(expand('%:p')))
-        " File does not exist on disk
-        return 0
-    endif
-    if len($TEMP) && expand('%:p:h') == $TEMP
-        " We're in a temp dir
-        return 0
-    endif
-    if len($TMP) && expand('%:p:h') == $TMP
-        " Also in temp dir
-        return 0
-    endif
-    if index(g:skipview_files, expand('%')) >= 0
-        " File is in skip list
-        return 0
-    endif
-    return 1
-endfunction
-augroup vimrcAutoView
-    autocmd!
-    " Autosave & Load Views.
-    autocmd BufWritePost,BufLeave,WinLeave ?* if MakeViewCheck() | mkview | endif
-    autocmd BufWinEnter ?* if MakeViewCheck() | silent loadview | endif
-augroup end
+"let g:skipview_files = [
+"            \ '[EXAMPLE PLUGIN BUFFER]'
+"            \ ]
+"function! MakeViewCheck()
+"    if has('quickfix') && &buftype =~ 'nofile'
+"        " Buffer is marked as not a file
+"        return 0
+"    endif
+"    if empty(glob(expand('%:p')))
+"        " File does not exist on disk
+"        return 0
+"    endif
+"    if len($TEMP) && expand('%:p:h') == $TEMP
+"        " We're in a temp dir
+"        return 0
+"    endif
+"    if len($TMP) && expand('%:p:h') == $TMP
+"        " Also in temp dir
+"        return 0
+"    endif
+"    if index(g:skipview_files, expand('%')) >= 0
+"        " File is in skip list
+"        return 0
+"    endif
+"    return 1
+"endfunction
+"augroup vimrcAutoView
+"    autocmd!
+"    " Autosave & Load Views.
+"    autocmd BufWritePost,BufLeave,WinLeave ?* if MakeViewCheck() | mkview | endif
+"    autocmd BufWinEnter ?* if MakeViewCheck() | silent loadview | endif
+"augroup end
 
 " =============================================================================
 " 폴더 설정이 되어 있는 파일을 열었을때 폴더 되어 있는 레벨을 설정한다.
@@ -338,9 +376,9 @@ set fdl=0
 set history=1000
 
 " =============================================================================
-" search 시 찾는 단어를 하이라이팅 해 준다.
+" search 시 찾는 단어의 하이라이팅
 " =============================================================================
-set hlsearch
+set nohlsearch
 
 " =============================================================================
 " 찾기, 바꾸기 등에서 대소문자 구분을 하지 않는다.
@@ -437,9 +475,9 @@ map <F4> [{V]}zf
 " =============================================================================
 " (), {}자동 
 " =============================================================================
- au BufNewFile,BufRead *.c imap { {<CR>}<ESC>O
- au BufNewFile,BufRead *.h imap { {<CR>}<ESC>O
- au BufNewFile,BufRead *.cpp imap { {<CR>}<ESC>O
+au BufNewFile,BufRead *.c imap { {<CR>}<ESC>O
+au BufNewFile,BufRead *.h imap { {<CR>}<ESC>O
+au BufNewFile,BufRead *.cpp imap { {<CR>}<ESC>O
 
 " =============================================================================
 " 함수 단위로 folding marker 삽입하기
@@ -481,9 +519,14 @@ noremap ; :
 "noremap : <nop>
 
 " =============================================================================
+" Edit vimrc
+" =============================================================================
+nmap ,v :edit $MYVIMRC<CR>
+
+" =============================================================================
 " unite
 " =============================================================================
-nnoremap <leader>f :<C-u>Unite file<CR>
+nnoremap <leader>f :<C-u>Unite file_rec<CR>
 "nnoremap <C-p> :Unite file_rec/async<cr>
 "nnoremap <leader>r :<C-u>Unite -start-insert file_rec/async:!<CR>
 "nnoremap <leader>f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
@@ -495,3 +538,13 @@ nnoremap <leader>f :<C-u>Unite file<CR>
 let g:unite_source_grep_command='ack'
 let g:unite_source_grep_default_opts='--no-heading --no-color -a -C4'
 let g:unite_source_grep_recursive_opt=''
+
+
+" encoding settins
+set fenc=utf-8
+set fencs=utf-8,cp949,euc-kr
+set encoding=cp949
+set langmenu=cp949
+
+
+
