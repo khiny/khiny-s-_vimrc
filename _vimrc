@@ -152,6 +152,8 @@ else
 endif
 
 NeoBundle 'wannesm/wmgraphviz.vim'
+NeoBundle 'Yggdroot/indentLine'
+NeoBundle 'khiny/khiny-s-_vimrc'
 
 filetype plugin indent on     " Required!
 "
@@ -162,6 +164,12 @@ filetype plugin indent on     " Required!
 
 " Installation check.
 NeoBundleCheck
+
+
+" Load matchit.vim, but only if the user hasn't installed a newer version.
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
+endif
 
 " =============================================================================
 " <Leader> 설정 (mapleader변수 이용)
