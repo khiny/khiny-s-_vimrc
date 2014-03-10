@@ -86,6 +86,7 @@ map <SPACE> <Plug>(easymotion-s2)
 NeoBundle 'https://github.com/terryma/vim-expand-region'
 NeoBundle 'bling/vim-airline'
 set laststatus=2
+"let g:airline_powerline_fonts = 1
 "let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#left_sep = ' '
 "let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -94,14 +95,15 @@ set laststatus=2
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
+"let g:airline_theme = 'molokai'
 let g:airline_left_sep = 'þó'
 let g:airline_left_alt_sep = 'þô'
-let g:airline_right_sep = 'þõ'
-let g:airline_right_alt_sep = 'þö'
+"let g:airline_right_sep = 'þõ'
+let g:airline_right_sep = ''
+"let g:airline_right_alt_sep = 'þö'
 let g:airline_symbols.branch = 'þã'
 let g:airline_symbols.readonly = 'þå'
 let g:airline_symbols.linenr = 'þä'
-
 
 NeoBundle 'vim-startify'
 let g:startify_custom_indices = ['f', 'g', 'h', 'r', 'i', 'o', 'b']
@@ -175,6 +177,11 @@ endif
 " <Leader> ¼³Á¤ (mapleaderº¯¼ö ÀÌ¿ë)
 " =============================================================================
 let mapleader = ","
+
+
+" Column scroll-binding on <leader>sb
+noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
+
 
 " =============================================================================
 " À©µµ¿ì »ç¿ë½Ã gvimÀÇ ÆùÆ®¹× gui ¿É¼ÇÀ» ¼³Á¤ÇÑ´Ù. gui ¿É¼ÇÀº ¸Þ´º, ½ºÅ©·Ñ¹Ù,
@@ -535,6 +542,7 @@ nmap ,v :edit $MYVIMRC<CR>
 " unite
 " =============================================================================
 nnoremap <leader>f :<C-u>Unite file_rec<CR>
+nnoremap <leader>b :<C-u>Unite buffer<CR>
 "nnoremap <C-p> :Unite file_rec/async<cr>
 "nnoremap <leader>r :<C-u>Unite -start-insert file_rec/async:!<CR>
 "nnoremap <leader>f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
