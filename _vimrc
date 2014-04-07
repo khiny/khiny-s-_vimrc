@@ -64,6 +64,15 @@ NeoBundle 'Shougo/vimproc', {
 " ...
 NeoBundle 'https://github.com/Shougo/unite.vim'
 NeoBundle 'molokai'
+"colorscheme molokai
+"let g:molokai_original = 1
+"let g:rehash256 = 1
+"set background=dark
+
+NeoBundle 'altercation/vim-colors-solarized'
+set background=light
+colorscheme solarized
+
 "NeoBundle 'git://git.wincent.com/command-t.git'
 NeoBundle 'https://github.com/chazy/cscope_maps.git'
 NeoBundle 'https://github.com/wesleyche/SrcExpl.git'
@@ -76,10 +85,10 @@ let g:tagbar_width = 60
 NeoBundle 'Lokaltog/vim-easymotion'
 let g:EasyMotion_smartcase = 1
 "n-character search motion
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
+"map  / <Plug>(easymotion-sn)
+"omap / <Plug>(easymotion-tn)
+"map  n <Plug>(easymotion-next)
+"map  N <Plug>(easymotion-prev)
 
 map <SPACE> <Plug>(easymotion-s2)
 
@@ -450,12 +459,6 @@ highlight CursorIM guibg=Blue guifg=NONE ctermbg=Blue ctermfg=NONE
 "colorscheme torte
 "colorscheme desert
 
-" ===== molokai =====
-colorscheme molokai
-"let g:molokai_original = 1
-"let g:rehash256 = 1
-"set background=dark
-" ===== molokai =====
 
 "set background=dark
 "colorscheme solarized
