@@ -76,7 +76,11 @@ colorscheme solarized
 "NeoBundle 'git://git.wincent.com/command-t.git'
 NeoBundle 'https://github.com/chazy/cscope_maps.git'
 NeoBundle 'https://github.com/wesleyche/SrcExpl.git'
-NeoBundle 'The-NERD-tree'
+"NeoBundle 'The-NERD-tree'
+"map <F10> :NERDTreeToggle<CR>
+"let NERDTreeWinSize=44
+"let NERDTreeShowBookmarks=1
+"let NERDTreeHighlightCursorline=1
 NeoBundle 'Tagbar'
 nnoremap <silent> <F11> :TagbarToggle<CR>
 let g:tagbar_width = 60
@@ -247,14 +251,6 @@ command -bar HenryMarks silent MarkClear |
 			\execute '3Mark aec_process_apply_antibanding' |
 			\execute '4Mark aec_process_calculate_roi_current_luma' |
 			\execute '4Mark aec_set_roi aec_roi enabled!' |
-
-" =============================================================================
-" NERDtree
-" =============================================================================
-map <F10> :NERDTreeToggle<CR>
-let NERDTreeWinSize=44
-let NERDTreeShowBookmarks=1
-let NERDTreeHighlightCursorline=1
 
 " =============================================================================
 " SrcExpl
@@ -564,6 +560,36 @@ set fenc=utf-8
 set fencs=utf-8,cp949,euc-kr
 set encoding=cp949
 set langmenu=cp949
+
+
+" Toggle Vexplore with Ctrl-E
+function! ToggleVExplorer()
+  if exists("t:expl_buf_num")
+      let expl_win_num = bufwinnr(t:expl_buf_num)
+      if expl_win_num != -1
+          let cur_win_nr = winnr()
+          exec expl_win_num . 'wincmd w'
+          close
+          exec cur_win_nr . 'wincmd w'
+          unlet t:expl_buf_num
+      else
+          unlet t:expl_buf_num
+      endif
+  else
+      exec '1wincmd w'
+      Vexplore
+      let t:expl_buf_num = bufnr("%")
+  endif
+endfunction
+map <silent> <C-E> :call ToggleVExplorer()<CR>
+
+" Hit enter in the file browser to open the selected
+" file with :vsplit to the right of the browser.
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+
+" Change directory to the current buffer when opening files.
+set autochdir
 
 
 
