@@ -72,6 +72,7 @@ NeoBundle 'molokai'
 NeoBundle 'altercation/vim-colors-solarized'
 set background=light
 colorscheme solarized
+let g:solarized_italic = 0
 
 "NeoBundle 'git://git.wincent.com/command-t.git'
 NeoBundle 'https://github.com/chazy/cscope_maps.git'
@@ -448,22 +449,11 @@ highlight Cursor guibg=Red guifg=Black ctermbg=Red ctermfg=Black
 highlight CursorIM guibg=Blue guifg=NONE ctermbg=Blue ctermfg=NONE
 
 " =============================================================================
-" statusline, stl
-" =============================================================================
-
-
-"colorscheme torte
-"colorscheme desert
-
-
-"set background=dark
-"colorscheme solarized
-
-" =============================================================================
 " TagExplorer 창크기 조절
 " =============================================================================
 "let TE_WinWidth = 25    " TagExplorer 창크기 조절
 "Funtion Key F1~F11 Mapping
+
 " =============================================================================
 " 세로 절반 싸이즈로 창을 분할한다.
 " 특정 싸이즈로 창을 분할하고 싶은 경우 30vs 처럼 숫자를 vs앞에 입력한다.
@@ -536,6 +526,11 @@ noremap ; :
 " Edit vimrc
 " =============================================================================
 nmap ,v :edit $MYVIMRC<CR>
+
+" =============================================================================
+" Vim 7.3 contains as new feature persistent undo
+" =============================================================================
+set noundofile
 
 " =============================================================================
 " unite
