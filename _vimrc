@@ -24,42 +24,27 @@ set nocompatible
 " =============================================================================
 filetype off
 
-" =============================================================================
-" pathogen.vim
-" =============================================================================
-" runtime bundle/vim-pathogen/autoload/pathogen.vim
-" call pathogen#infect()
+" Note: Skip initialization for vim-tiny or vim-small.
+if !1 | finish | endif
 
 if has('vim_starting')
-	set nocompatible               " Be iMproved
-	set runtimepath+=~/.vim/bundle/neobundle.vim/
-	"set runtimepath+=C:\Program\ Files\ (x86)/Vim/vimfiles/bundle/neobundle.vim/
-	"set runtimepath+=C:\Program\ Files/Vim/vimfiles/bundle/neobundle.vim/
+  set nocompatible               " Be iMproved
+
+  " Required:
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
-call neobundle#rc(expand('~/.vim/bundle/'))
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
 
 " Let NeoBundle manage NeoBundle
+" Required:
 NeoBundleFetch 'Shougo/neobundle.vim'
-
-" Recommended to install
-let g:make = 'gmake'
-if system('uname -o') =~ '^GNU/'
-	let g:make = 'make'
-endif
-NeoBundle 'Shougo/vimproc', {
-			\ 'build' : {
-			\     'windows' : 'make -f make_mingw32.mak',
-			\     'cygwin' : 'make -f make_cygwin.mak',
-			\     'mac' : 'make -f make_mac.mak',
-			\     'unix' : 'make -f make_unix.mak',
-			\    },
-			\ }
 
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
-"
 " Note: You don't set neobundle setting in .gvimrc!
+
 
 " ...
 NeoBundle 'https://github.com/Shougo/unite.vim'
@@ -69,12 +54,11 @@ NeoBundle 'molokai'
 "let g:rehash256 = 1
 "set background=dark
 
-NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'https://github.com/altercation/vim-colors-solarized.git'
 set background=light
 colorscheme solarized
 let g:solarized_italic = 0
 
-"NeoBundle 'git://git.wincent.com/command-t.git'
 NeoBundle 'https://github.com/chazy/cscope_maps.git'
 NeoBundle 'https://github.com/wesleyche/SrcExpl.git'
 "NeoBundle 'The-NERD-tree'
@@ -171,15 +155,16 @@ NeoBundle 'wannesm/wmgraphviz.vim'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'khiny/khiny-s-_vimrc'
 
-filetype plugin indent on     " Required!
-"
-" Brief help
-" :NeoBundleList          - list configured bundles
-" :NeoBundleInstall(!)    - install(update) bundles
-" :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+call neobundle#end()
 
-" Installation check.
+" Required:
+filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
 NeoBundleCheck
+
+
 
 
 " Load matchit.vim, but only if the user hasn't installed a newer version.
