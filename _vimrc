@@ -55,9 +55,6 @@ NeoBundle 'molokai'
 "set background=dark
 
 NeoBundle 'https://github.com/altercation/vim-colors-solarized.git'
-set background=light
-colorscheme solarized
-let g:solarized_italic = 0
 
 NeoBundle 'https://github.com/chazy/cscope_maps.git'
 NeoBundle 'https://github.com/wesleyche/SrcExpl.git'
@@ -154,6 +151,7 @@ endif
 NeoBundle 'wannesm/wmgraphviz.vim'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'khiny/khiny-s-_vimrc'
+NeoBundle 'vim-scripts/DirDiff.vim'
 
 call neobundle#end()
 
@@ -181,6 +179,13 @@ let mapleader = ","
 " Column scroll-binding on <leader>sb
 noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljzt:setl scb<CR><C-w>p:setl scb<CR>:let &so=@z<CR>
 
+
+" =============================================================================
+" solarized
+" =============================================================================
+set background=light
+colorscheme solarized
+let g:solarized_italic = 0
 
 " =============================================================================
 " 윈도우 사용시 gvim의 폰트및 gui 옵션을 설정한다. gui 옵션은 메뉴, 스크롤바,
