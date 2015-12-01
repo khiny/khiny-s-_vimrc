@@ -108,14 +108,6 @@ if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 let g:airline_theme = 'molokai'
-let g:airline_left_sep = 'ş?
-let g:airline_left_alt_sep = 'ş?
-"let g:airline_right_sep = 'ş?
-let g:airline_right_sep = ''
-"let g:airline_right_alt_sep = 'ş?
-let g:airline_symbols.branch = 'ş?
-let g:airline_symbols.readonly = 'ş?
-let g:airline_symbols.linenr = 'ş?
 
 "NeoBundle 'vim-startify'
 "let g:startify_custom_indices = ['f', 'g', 'h', 'r', 'i', 'o', 'b']
