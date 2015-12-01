@@ -3,14 +3,14 @@
 " ±âº»ÀûÀ¸·Î ¼³Á¤µÇ´Â ¿¹Á¦µéÀ» Æ÷ÇÔ ÇÑ´Ù. history .. µî..
 " =============================================================================
 source $VIMRUNTIME/vimrc_example.vim
-source $VIMRUNTIME/gvimrc_example.vim
+"source $VIMRUNTIME/gvimrc_example.vim
 
 " =============================================================================
 " À©µµ¿ì¿¡¼­¸¸ »ç¿ëµÇ´Â ¿©·¯°¡Áö Å° ¸ÊµéÀ» Æ÷ÇÔÇÑ´Ù.
 " C-v, C-c, C-q, C-a µî...
 " =============================================================================
 if has("win32")
-	source $VIMRUNTIME/mswin.vim
+"	source $VIMRUNTIME/mswin.vim
 endif
 
 " =============================================================================
@@ -48,23 +48,40 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " ...
 NeoBundle 'https://github.com/Shougo/unite.vim'
-NeoBundle 'molokai'
-"colorscheme molokai
-"let g:molokai_original = 1
-"let g:rehash256 = 1
-"set background=dark
+
+NeoBundle 'tomasr/molokai'
+
+NeoBundle 'Shougo/vimproc.vim', {
+\ 'build' : {
+\     'windows' : 'tools\\update-dll-mingw',
+\     'cygwin' : 'make -f make_cygwin.mak',
+\     'mac' : 'make',
+\     'linux' : 'make',
+\     'unix' : 'gmake',
+\    },
+\ }
 
 NeoBundle 'https://github.com/altercation/vim-colors-solarized.git'
 
 NeoBundle 'https://github.com/chazy/cscope_maps.git'
+
 NeoBundle 'https://github.com/wesleyche/SrcExpl.git'
+
 "NeoBundle 'The-NERD-tree'
 "map <F10> :NERDTreeToggle<CR>
+"map <leader>q :NERDTreeToggle<CR>
 "let NERDTreeWinSize=44
 "let NERDTreeShowBookmarks=1
 "let NERDTreeHighlightCursorline=1
+
+NeoBundle 'Shougo/vimfiler.vim'
+map <F10> :VimFilerExplore<CR>
+nmap <leader>q :VimFilerExplore<CR>
+"g:vimfiler_as_default_explorer=1
+
 NeoBundle 'Tagbar'
 nnoremap <silent> <F11> :TagbarToggle<CR>
+nmap <leader>t :TagbarToggle<CR>
 let g:tagbar_width = 60
 
 "NeoBundle 'haya14busa/vim-easymotion'
@@ -75,10 +92,10 @@ let g:EasyMotion_smartcase = 1
 "omap / <Plug>(easymotion-tn)
 "map  n <Plug>(easymotion-next)
 "map  N <Plug>(easymotion-prev)
-
 map <SPACE> <Plug>(easymotion-s2)
 
 NeoBundle 'https://github.com/terryma/vim-expand-region'
+
 NeoBundle 'bling/vim-airline'
 set laststatus=2
 "let g:airline_powerline_fonts = 1
@@ -90,21 +107,23 @@ set laststatus=2
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
-"let g:airline_theme = 'molokai'
-let g:airline_left_sep = 'þó'
-let g:airline_left_alt_sep = 'þô'
-"let g:airline_right_sep = 'þõ'
+let g:airline_theme = 'molokai'
+let g:airline_left_sep = 'þ?
+let g:airline_left_alt_sep = 'þ?
+"let g:airline_right_sep = 'þ?
 let g:airline_right_sep = ''
-"let g:airline_right_alt_sep = 'þö'
-let g:airline_symbols.branch = 'þã'
-let g:airline_symbols.readonly = 'þå'
-let g:airline_symbols.linenr = 'þä'
+"let g:airline_right_alt_sep = 'þ?
+let g:airline_symbols.branch = 'þ?
+let g:airline_symbols.readonly = 'þ?
+let g:airline_symbols.linenr = 'þ?
 
-NeoBundle 'vim-startify'
-let g:startify_custom_indices = ['f', 'g', 'h', 'r', 'i', 'o', 'b']
+"NeoBundle 'vim-startify'
+"let g:startify_custom_indices = ['f', 'g', 'h', 'r', 'i', 'o', 'b']
 
 NeoBundle 'vim-multiple-cursors'
+
 NeoBundle 'mileszs/ack.vim'
+
 NeoBundle 'tpope/vim-fugitive' "{{{
 nnoremap <silent> <leader>gs :Gstatus<CR>
 nnoremap <silent> <leader>gd :Gdiff<CR>
@@ -121,10 +140,85 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 "NeoBundle 'https://github.com/Valloric/YouCompleteMe'
 "NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'Shougo/neocomplete.vim'
-"let g:neocomplcache_enable_at_startup = 1
+""""""""""let g:neocomplcache_enable_at_startup = 1
+""""""""""let g:neocomplete#enable_smart_case = 1
+""""""""""autocmd FileType txt :NeoCompleteDisable
+""""""""""autocmd FileType c,cpp,asm,h :NeoCompleteEnable
+
+"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
 let g:neocomplete#enable_smart_case = 1
-autocmd FileType txt :NeoCompleteDisable
-autocmd FileType c,cpp,asm,h :NeoCompleteEnable
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+let g:neocomplete#enable_auto_close_preview = 1
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
 
 NeoBundle 'Shougo/unite-outline'
 
@@ -148,10 +242,45 @@ else
 	let g:syntastic_style_warning_symbol = '>'
 endif
 
-NeoBundle 'wannesm/wmgraphviz.vim'
+NeoBundle 'Shougo/neoinclude.vim'
+
+"NeoBundle 'nathanaelkane/vim-indent-guides'
+"let g:indent_guides_start_level=2
+"let g:indent_guides_guide_size=1
+"let g:indent_guides_auto_colors = 0
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black ctermbg=3
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgrey ctermbg=4
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red ctermbg=3
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+"hi IndentGuidesOdd  ctermbg=red
+"hi IndentGuidesEven ctermbg=green
+"hi IndentGuidesOdd  ctermbg=black
+"hi IndentGuidesEven ctermbg=darkgrey
+"hi IndentGuidesOdd  ctermbg=white
+"hi IndentGuidesEven ctermbg=lightgrey
+
 NeoBundle 'Yggdroot/indentLine'
+"let g:indentLine_loaded = 1
+"let g:indentLine_color_term = 8
+"let g:indentLine_color_tty_light = 7 " (default: 4)
+"let g:indentLine_color_dark = 1 " (default: 2)
+"let g:indentLine_char = '¡í'
+let g:indentLine_char = '|'
+"let g:indentLine_leadingSpaceChar = '¡¤'
+"let g:indentLine_leadingSpaceEnabled = 1
+"let g:indentLine_loaded = 1
+
+
+
+NeoBundle 'wannesm/wmgraphviz.vim'
+
 NeoBundle 'khiny/khiny-s-_vimrc'
+
 NeoBundle 'vim-scripts/DirDiff.vim'
+
+NeoBundle 'itchyny/calendar.vim'
+
+NeoBundle 'git://gist.github.com/1630581.git'
 
 call neobundle#end()
 
@@ -161,8 +290,6 @@ filetype plugin indent on
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 NeoBundleCheck
-
-
 
 
 " Load matchit.vim, but only if the user hasn't installed a newer version.
@@ -183,9 +310,9 @@ noremap <silent> <leader>sb :<C-u>let @z=&so<CR>:set so=0 noscb<CR>:bo vs<CR>Ljz
 " =============================================================================
 " solarized
 " =============================================================================
-set background=light
-colorscheme solarized
-let g:solarized_italic = 0
+"set background=light
+"colorscheme solarized
+"let g:solarized_italic = 0
 
 " =============================================================================
 " À©µµ¿ì »ç¿ë½Ã gvimÀÇ ÆùÆ®¹× gui ¿É¼ÇÀ» ¼³Á¤ÇÑ´Ù. gui ¿É¼ÇÀº ¸Þ´º, ½ºÅ©·Ñ¹Ù,
@@ -193,9 +320,11 @@ let g:solarized_italic = 0
 " ¼³Á¤ÇÏ´Â °ÍÀÌ´Ù. ¾Æ·¡ÀÇ ¼³Á¤Àº ¾Æ¹«°Íµµ ¾øÀÌ »ç¿ëÇÏ´Â °ÍÀÌ´Ù.
 " =============================================================================
 if has("win32")
-	"set guifont=³ª´®°íµñÄÚµù:h10:cHANGEUL
-	"set guifont=DejaVu\ Sans\ Mono:h10  "font setting
-	set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h10
+	"set guifont=³ª´®°íµñÄÚµù:h12:cHANGEUL
+	"set guifont=Consolas:h12:cHANGEUL
+	"set guifont=DejaVu\ Sans\ Mono:h12  "font setting
+	set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h12
+	let Powerline_symbols = 'fancy'
 	"set guioptions-=m  "remove menu bar
 	set guioptions-=T  "remove toolbar
 	"set guioptions-=r  "remove right-hand scroll bar
@@ -247,6 +376,7 @@ command -bar HenryMarks silent MarkClear |
 " SrcExpl
 " =============================================================================
 nmap <F9> :SrcExplToggle<CR> 
+nmap ,9 :SrcExplToggle<CR>
 let g:SrcExpl_refreshTime = 100 
 let g:SrcExpl_winHeight = 14
 let g:SrcExpl_isUpdateTags = 0
@@ -481,19 +611,6 @@ au BufNewFile,BufRead *.cpp imap { {<CR>}<ESC>O
 "map <SPACE> za
 
 " =============================================================================
-" hangeul.vim °ü·Ã ¼³Á¤ 
-" http://mearie.org/projects/vim-hangeul/
-" =============================================================================
-" let hangeul_enabled = 1
-" ÇÑ¿µ ÀüÈ¯ ±Û¼è´Â ±âº»ÀûÀ¸·Î <C-\><Space>
-" ÇÑÀÚ º¯È¯ ±Û¼è <C-\><CR> : ÇÑÀÚ µ¥ÀÌÅÍº£ÀÌ½º ÆÄÀÏ ÇÊ¿ä
-" svn export svn://kldp.net/svnroot/hangul/libhangul/trunk/data/hanja/hanja.txt
-" hangeul_default_mode = 2s "µÎ¹ú½Ä('2s'), ¼¼¹ú½Ä ÃÖÁ¾('3f'), ¼¼¹ú½Ä 390('39')
-" hangeul_cmdline "ÀÔ·Â ¸ðµå »Ó¸¸ ¾Æ´Ï¶ó ¸í·ÉÁÙ ¸ðµå¿Í °Ë»öÁÙ¿¡¼­µµ ÇÑ±Û ÀÔ·ÂÀÌ °¡´É
-" hangeul_hanja_path "hanja.txt ÆÄÀÏÀ» Ã£À» °æ·Î¸¦ ÁöÁ¤
-" hangeul_hanja_desc_limit = 1 "ÇÑÀÚÀÇ ¶æ°ú À½À» ¾ó¸¶³ª º¸¿© ÁÙ Áö¸¦ °áÁ¤
-
-" =============================================================================
 " clipboard ¼³Á¤
 " =============================================================================
 set clipboard=unnamed
@@ -502,6 +619,7 @@ set clipboard=unnamed
 " horizontal scroll bar ¼³Á¤
 " =============================================================================
 :nnoremap <silent><expr> <f2> ':set wrap! go'.'-+'[&wrap]."=b\r"
+:nnoremap <silent><expr> <leader>2 ':set wrap! go'.'-+'[&wrap]."=b\r"
 ":set wrap! go+=b<CR>
 ":set wrap! go-=b<CR>
 
@@ -515,7 +633,7 @@ noremap ; :
 " =============================================================================
 " Edit vimrc
 " =============================================================================
-nmap ,v :edit $MYVIMRC<CR>
+nmap <leader>v :edit $MYVIMRC<CR>
 
 " =============================================================================
 " Vim 7.3 contains as new feature persistent undo
@@ -525,8 +643,11 @@ set noundofile
 " =============================================================================
 " unite
 " =============================================================================
-nnoremap <leader>f :<C-u>Unite file_rec<CR>
-nnoremap <leader>b :<C-u>Unite buffer<CR>
+"nnoremap <leader>f :<C-u>Unite file_rec<CR>
+nnoremap <leader>f :<C-u>Unite file_rec/async<CR>
+nnoremap <leader>b :<C-u>Unite buffer bookmark<CR>
+nnoremap <leader>o :<C-u>Unite outline<CR><C-w><S-_>
+nnoremap <leader><Space> :Unite grep:.<CR>
 "nnoremap <C-p> :Unite file_rec/async<cr>
 "nnoremap <leader>r :<C-u>Unite -start-insert file_rec/async:!<CR>
 "nnoremap <leader>f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
@@ -536,7 +657,7 @@ nnoremap <leader>b :<C-u>Unite buffer<CR>
 "call unite#custom#source('line,outline','matchers','matcher_fuzzy')
 "let g:unite_prompt='¡í '
 let g:unite_source_grep_command='ack'
-let g:unite_source_grep_default_opts='--no-heading --no-color -a -C4'
+let g:unite_source_grep_default_opts='-i --no-heading --no-color -k -H'
 let g:unite_source_grep_recursive_opt=''
 
 
@@ -566,7 +687,7 @@ function! ToggleVExplorer()
       let t:expl_buf_num = bufnr("%")
   endif
 endfunction
-map <silent> <C-E> :call ToggleVExplorer()<CR>
+"map <silent> <C-E> :call ToggleVExplorer()<CR>
 
 " Hit enter in the file browser to open the selected
 " file with :vsplit to the right of the browser.
@@ -574,7 +695,43 @@ let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 
 " Change directory to the current buffer when opening files.
-set autochdir
+"set autochdir
 
+"let g:mwDefaultHighlightingPalette='extended'
+"let g:mwDefaultHighlightingPalette='maximum'
 
+if has('unix')
+	set t_Co=256
+
+	"python -c "print ord(raw_input('char '))"
+	"for x in {1..12}; do echo -n "F$x "; tput kf$x | cat -A; echo; done
+	"special key : insert mode > Ctrl-v > 027 (linux)
+  "noremap ^[[[A <F1>
+  noremap A <F1>
+  noremap B <F2>
+  noremap C <F3>
+  noremap D <F4>
+  noremap E <F5>
+  noremap 17~ <F6>
+  noremap 18~ <F7>
+  noremap 19~ <F8>
+  noremap 20~ <F9>
+  noremap 21~ <F10>
+  noremap 23~ <F11>
+  noremap 24~ <F12>
+endif
+
+set bg=dark
+colorscheme molokai
+"let g:molokai_original = 1
+"let g:rehash256 = 1
+"set background=dark
+
+set colorcolumn=80
+"autocmd FileType c highlight OverLength ctermbg=darkred ctermfg=white
+"autocmd FileType c match OverLength /\%>80v.\+\|\s\+$\|^\s*\n\+\%$/
+
+" 100 columns for HTML
+" autocmd BufRead *.html highlight OverLength ctermbg=darkred ctermfg=white
+" autocmd BufRead *.html match OverLength /\%100v.\+/
 
